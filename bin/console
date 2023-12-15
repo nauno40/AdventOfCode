@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Create the Application
+$application = new Symfony\Component\Console\Application;
+
+// Add commands
+
+$commands = glob(__DIR__ . '/../src/Command/*.php');
+
+foreach ($commands as $command) {
+    $commandName = str_ireplace('.php', '', basename($command));
+    $fullCommandName = '\App\Command\\' . $commandName;
+    $application->add(new $fullCommandName);
+}
+
+// Run it
+$application->run();
