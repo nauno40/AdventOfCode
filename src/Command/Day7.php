@@ -20,6 +20,7 @@ final class Day7 extends HelperCommand
     const TWOPAIRS = 2;
     const PAIR = 1;
     const HIGHCARD = 0;
+    const JOKER = 'J';
     private array $cardsStrength = [
         'A' => 13,
         'K' => 12,
@@ -81,7 +82,7 @@ final class Day7 extends HelperCommand
             $winners += $hand['bid'] * ($key + 1);
         }
 
-        $output->writeln('Le resultat est : ' . $winners);
+        $output->writeln('Le résultat est : ' . $winners);
 
         return Command::SUCCESS;
     }
