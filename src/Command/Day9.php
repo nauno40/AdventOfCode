@@ -34,7 +34,7 @@ final class Day9 extends HelperCommand
      * @param array $sequence
      * @return int
      */
-    private function extrapolateValue(array $sequence)
+    private function extrapolateValue(array $sequence): int
     {
         $allDiff = [$sequence];
 
