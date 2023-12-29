@@ -9,6 +9,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+// ne pas affichier les erreurs :
+
 final class Day10 extends Command
 {
     private array $direction = [
@@ -21,20 +23,20 @@ final class Day10 extends Command
             'W' => ['W']
         ],
         'L' => [
-            'W' => ['W', 'N'],
-            'S' => ['S', 'E'],
+            'W' => ['N'],
+            'S' => ['E'],
         ],
         'J' => [
-            'E' => ['E', 'N'],
-            'S' => ['S', 'W'],
+            'E' => ['N'],
+            'S' => ['W'],
         ],
         'F' => [
-            'N' => ['N', 'E'],
-            'W' => ['W', 'S'],
+            'N' => ['E'],
+            'W' => ['S'],
         ],
         '7' => [
-            'N' => ['N', 'W'],
-            'E' => ['E', 'S'],
+            'N' => ['W'],
+            'E' => ['S'],
         ],
     ];
 
@@ -50,28 +52,26 @@ final class Day10 extends Command
             $maze->displayMaze();
 
             $startPosition = $maze->getCurrentPosition();
-            $lastDirection = 'S';
+            $lastDirection = 'N';
             $maze->move($lastDirection);
 
             $moveCount = 0;
 
             while ($maze->getCurrentPosition() !== $startPosition) {
-                exec('echo ' . $maze->getCurrentSymbol() . ' >> test.txt');
                 $newDirections = $this->direction[$maze->getCurrentSymbol()][$lastDirection];
                 foreach ($newDirections as $newDirection) {
-
                     $maze->move($newDirection);
                     $lastDirection = $newDirection;
                 }
                 $moveCount++;
             }
 
+            $output->writeln("La distance maximum est de : " . round($moveCount / 2));
+            return Command::SUCCESS;
 
         } catch (Exception $e) {
-            $output->writeln('ERROR : NTM');
+            $output->writeln('ERROR : ' . $e->getMessage());
+            return Command::FAILURE;
         }
-
-        $output->writeln("La distance maximum est de : " . $moveCount + 1);
-        return Command::SUCCESS;
     }
 }
