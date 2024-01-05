@@ -9,11 +9,20 @@ class HelperMaze
     public array $mazeArray;
     public array $currentPosition;
 
+    private string $startSymbol = 'S';
+
+    public function setStartSymbol(string $startSymbol): HelperMaze
+    {
+        $this->startSymbol = $startSymbol;
+        return $this;
+    }
+
     /**
      * @throws Exception
      */
-    public function __construct($filePath)
+    public function __construct($filePath, $startSymbol)
     {
+        $this->startSymbol = $startSymbol;
         $this->loadMazeFromFile($filePath);
     }
 
@@ -33,7 +42,7 @@ class HelperMaze
         // Find the starting position
         foreach ($this->mazeArray as $y => $row) {
             foreach ($row as $x => $cell) {
-                if ($cell === 'S') {
+                if ($cell === $this->startSymbol) {
                     $this->currentPosition = ['x' => $x, 'y' => $y];
                     break 2;
                 }
@@ -41,7 +50,7 @@ class HelperMaze
         }
 
         if (!isset($this->currentPosition)) {
-            throw new Exception("Starting position 'S' not found in the maze.");
+            throw new Exception("Starting position $this->startSymbol not found in the maze.");
         }
     }
 

@@ -9,8 +9,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-// ne pas affichier les erreurs :
-
 final class Day10 extends Command
 {
     private array $direction = [
